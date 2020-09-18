@@ -1,0 +1,29 @@
+#include "Router.h"
+#include "Packet.h"
+#include <iostream>
+#include <vector>
+
+#ifndef Graph_H
+#define Graph_H
+
+//not complete: added graph class so we can create objects of graph in main
+class Graph
+{
+    public:
+        //graph constructor, will receive number of routers in graph.
+        Graph(int N);
+        //note: decided to do an adjacency matrix instead of adjacency list, will change how the below methods are
+        //implemented compared to what we had in UML
+        
+        //the following methods were moved here instead of Packet.h
+        void add_edges(int i, int j);   
+        bool is_connected(Router router1, Router router2); 
+        void send_packet(Packet packet, Router router);
+        int distance(int i, int j);
+
+    private:
+        int router_num;
+        int adjacency_matrix[];
+};
+
+#endif Graph_H
