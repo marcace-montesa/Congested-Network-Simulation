@@ -11,3 +11,7 @@ void Router::add_packet(Packet packet)
     queue.push_back(packet);
 }
 
+Router::Router() 
+{ 
+
+}

@@ -17,13 +17,14 @@ class Graph
         
         //the following methods were moved here instead of Packet.h
         void add_edges(int i, int j);   
-        bool is_connected(Router router1, Router router2); 
-        void send_packet(Packet packet, Router router);
+        bool is_connected(int i, int j); 
+        void send_packet(Packet packet, int i);
         int distance(int i, int j);
 
     private:
         int router_num;
-        int adjacency_matrix[];
+        int adjacency_matrix[][];
+        vector<Router> line;
 };
 
 #endif Graph_H
