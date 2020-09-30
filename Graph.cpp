@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <vector>
 #include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -40,10 +41,9 @@ void Graph::send_packet(Packet packet, int i)
 
 int Graph::distance(int src, int dest)
 {  
-
-  int distance[router_num] = {0};
-  bool nodeVisited[router_num] = {false};
-  queue <int> Q;
+  int distance [router_num];
+  bool nodeVisited [router_num] = {false};
+  vector <int> Q;
 
     if(is_connected(src, dest) == true)  //check if they're neighbors
     {
