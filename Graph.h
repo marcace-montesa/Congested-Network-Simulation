@@ -2,6 +2,9 @@
 #include "Packet.h"
 #include <iostream>
 #include <vector>
+#include <bits/stdc++.h>
+
+#define NODES 5
 
 #ifndef Graph_H
 #define Graph_H
@@ -23,8 +26,8 @@ class Graph
 
     private:
         int router_num;
-        int adjacency_matrix[][router_num];
         vector<Router> line;
+        int adjacency_matrix[NODES][NODES];
 };
 
-#endif
+#endif 

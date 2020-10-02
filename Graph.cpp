@@ -1,7 +1,4 @@
 #include "Graph.h"
-#include <vector>
-#include <iostream>
-#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -12,6 +9,13 @@ Graph::Graph(int N)
    {
       Router router;
       line.push_back(router); //add Router to the graph
+   }
+   for(int i = 0; i < N; i++) 
+   {
+      for(int j = 0; j < N; j++) 
+      {
+        adjacency_matrix[i][j] = 0;
+      }
    }
 }
 
@@ -41,10 +45,12 @@ void Graph::send_packet(Packet packet, int i)
 
 int Graph::distance(int src, int dest)
 {  
-  int distance [router_num];
+  int distance [router_num] = {};
   bool nodeVisited [router_num] = {false};
   vector <int> Q;
-
+  int current_node = src;
+  cout << current_node << endl;
+  
     if(is_connected(src, dest) == true)  //check if they're neighbors
     {
       return 1;
@@ -52,20 +58,20 @@ int Graph::distance(int src, int dest)
    
     else 
     {
-    Q.push(src);
-    nodeVisited[Q.front()] = true;
+      Q.push_back(src);
+      nodeVisited[Q.front()] = true;
 
       while(!Q.empty())
       {
       int x = Q.front();
-      Q.pop();
-
+      cout << x << endl;
+      Q.pop_back();
       for(int i = 0; i < line.size(); i++)
       {
         if(is_connected(x,i) == true && (!nodeVisited[i]))
         {
           distance[i] = distance[x] + 1;
-          Q.push(i);
+          Q.push_back(i);
           nodeVisited[i] = true;
         }
       }
