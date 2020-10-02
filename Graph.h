@@ -23,8 +23,8 @@ class Graph
 
     private:
         int router_num;
-        int adjacency_matrix[][];
+        int adjacency_matrix[][router_num];
         vector<Router> line;
 };
 
-#endif Graph_H
+#endif
