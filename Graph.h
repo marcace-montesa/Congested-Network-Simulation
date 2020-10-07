@@ -9,21 +9,21 @@
 #ifndef Graph_H
 #define Graph_H
 
-//not complete: added graph class so we can create objects of graph in main
+//basic functionality complete
+//not complete: packet traversal of graph, sending multiple packets, faulty router problem
 class Graph
 {
     public:
         //graph constructor, will receive number of routers in graph.
         Graph(int N);
-        //note: decided to do an adjacency matrix instead of adjacency list, will change how the below methods are
-        //implemented compared to what we had in UML
-        
-        //the following methods were moved here instead of Packet.h
         void add_edges(int i, int j);   
         bool is_connected(int i, int j); 
         void send_packet(Packet packet, int i);
+        //next step: create send_packet that traverses graph
+        //also: send multiple packets
+        Router getRouter(int router);
         int distance(int i, int j);
-
+        
     private:
         int router_num;
         vector<Router> line;

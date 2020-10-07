@@ -28,5 +28,9 @@ int main()
   G.add_edges(4,1);
   int distance = G.distance(3, 4); 
   cout << "distance is " << distance << endl;
+
+  Packet packet = Packet("header");
+  G.send_packet(packet, 0);
+  cout << G.getRouter(0).getPacket().getHeader() << endl;
   return 0;
 }

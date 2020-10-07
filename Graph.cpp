@@ -44,6 +44,13 @@ void Graph::send_packet(Packet packet, int i)
     //Need to traverse the graph
 }
 
+Router Graph::getRouter(int router)
+{
+  return line[router];
+}
+
+
+
 int Graph::distance(int src, int dest)
 {  
   int distance [NODES] = {};

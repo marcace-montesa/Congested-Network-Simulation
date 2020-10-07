@@ -12,6 +12,7 @@ class Router
         //adds packet to buffer queue
         void add_packet(Packet packet);
         Router();
+        Packet getPacket();
 
     private:
         vector<Packet> queue;
