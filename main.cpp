@@ -6,6 +6,7 @@
 #include <vector>
 using namespace std;
 
+//track packet loss between routers
 /*void packet_loss(bool packet) 
 {
 
@@ -25,8 +26,7 @@ int main()
   G.add_edges(1,3);
   G.add_edges(2,3);
   G.add_edges(4,1);
-  //G.add_edges(3,4);
-  int distance = G.distance(3,4);
-  cout << distance << endl;
+  int distance = G.distance(3, 4); 
+  cout << "distance is " << distance << endl;
   return 0;
 }

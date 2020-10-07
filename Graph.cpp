@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include <queue>
 
 using namespace std;
 
@@ -45,9 +46,9 @@ void Graph::send_packet(Packet packet, int i)
 
 int Graph::distance(int src, int dest)
 {  
-  int distance [router_num] = {};
-  bool nodeVisited [router_num] = {false};
-  vector <int> Q;
+  int distance [NODES] = {};
+  bool nodeVisited [NODES] = {false};
+  queue <int> Q;
   int current_node = src;
   cout << current_node << endl;
   
@@ -58,20 +59,20 @@ int Graph::distance(int src, int dest)
    
     else 
     {
-      Q.push_back(src);
+      Q.push(src);
       nodeVisited[Q.front()] = true;
 
       while(!Q.empty())
       {
       int x = Q.front();
       cout << x << endl;
-      Q.pop_back();
+      Q.pop();
       for(int i = 0; i < line.size(); i++)
       {
-        if(is_connected(x,i) == true && (!nodeVisited[i]))
+        if (is_connected(x,i) == true && (!nodeVisited[i]))
         {
           distance[i] = distance[x] + 1;
-          Q.push_back(i);
+          Q.push(i);
           nodeVisited[i] = true;
         }
       }
