@@ -30,7 +30,7 @@ int main()
   cout << "distance is " << distance << endl;
 
   Packet packet = Packet("header");
-  G.send_packet(packet, 0);
-  cout << G.getRouter(0).getPacket().getHeader() << endl;
+  G.send_packet(packet, 2, 4);
+  cout << G.getRouter(4).getPacket().getHeader() << endl;
   return 0;
 }

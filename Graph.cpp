@@ -38,7 +38,15 @@ bool Graph::is_connected(int i, int j)
   }
 }
 
-void Graph::send_packet(Packet packet, int src, int dest) 
+void Graph::send_packet(Packet packet, int src, int dest)
+{
+  //simultes packet traversal betwwen two routers
+  line[src].add_packet(packet);
+  line[dest].add_packet(packet);
+  line[src].remove_packet();
+}
+
+void Graph::packet_path(Packet packet, int src, int dest) 
 {
   //  line[i].add_packet(packet); //send the packet from the router
     
@@ -46,15 +54,8 @@ void Graph::send_packet(Packet packet, int src, int dest)
     bool nodeVisited [NODES] = {false};
     queue <int> Q;
     int current_node = src;
-    int path[] = {}; // might need to add nodes
-
-      if(is_connected(src, dest) == true)  //check if they're neighbors
-      {
-        return 1;
-      }
-     
-      else 
-      {
+    int path[] = {}; // might need to add nodes 
+      
         Q.push(src);
         nodeVisited[Q.front()] = true;
 
@@ -80,15 +81,23 @@ void Graph::send_packet(Packet packet, int src, int dest)
       {
         for(int j = 0; j < line.size(); j++)
         {
-          if(distance[j] = i)
+          if(distance[j] == i)
             path[i] = j;
         }
       }
 
-      for(int i = 0; i < path.size(); i++)
+      for (int j = 0; j < line.size(); j++)
+      {
+        int src = path[j];
+        int dest = path[j+1];
+
+        send_packet(packet, src, dest);
+      }
+
+      /*for(int i = 0; i < (sizeof(path)/sizeof(path[0])); i++)
       {
         cout << path[i] << endl;
-      }
+      }*/
 }
 
 Router Graph::getRouter(int router)
@@ -124,7 +133,7 @@ int Graph::distance(int src, int dest)
       Q.pop();
       for(int i = 0; i < line.size(); i++)
       {
-        if (is_connected(x,i) == true && (!nodeVisited[i]))
+        if (is_connected(x, i) == true && (!nodeVisited[i]))
         {
           distance[i] = distance[x] + 1;
           Q.push(i);

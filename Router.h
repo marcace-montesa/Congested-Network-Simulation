@@ -1,5 +1,5 @@
 #include "Packet.h"
-#include <vector>
+#include <queue>
 using namespace std;
 
 #ifndef Router_H
@@ -11,11 +11,12 @@ class Router
     public:
         //adds packet to buffer queue
         void add_packet(Packet packet);
+        void remove_packet();
         Router();
         Packet getPacket();
 
     private:
-        vector<Packet> queue;
+        queue<Packet> queue;
         bool queue_full;
         bool isActive;
 };

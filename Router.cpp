@@ -8,8 +8,14 @@ Router::Router() {};
 
 void Router::add_packet(Packet packet)
 {
-    queue.push_back(packet);
+    queue.push(packet);
 }
+
+void Router::remove_packet()
+{
+    queue.pop();
+}
+
 
 Packet Router::getPacket()
 {
