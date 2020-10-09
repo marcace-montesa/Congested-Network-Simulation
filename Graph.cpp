@@ -38,10 +38,57 @@ bool Graph::is_connected(int i, int j)
   }
 }
 
-void Graph::send_packet(Packet packet, int i) 
+void Graph::send_packet(Packet packet, int src, int dest) 
 {
-    line[i].add_packet(packet); //send the packet from the router
-    //Need to traverse the graph
+  //  line[i].add_packet(packet); //send the packet from the router
+    
+    int distance [NODES] = {};
+    bool nodeVisited [NODES] = {false};
+    queue <int> Q;
+    int current_node = src;
+    int path[] = {}; // might need to add nodes
+
+      if(is_connected(src, dest) == true)  //check if they're neighbors
+      {
+        return 1;
+      }
+     
+      else 
+      {
+        Q.push(src);
+        nodeVisited[Q.front()] = true;
+
+        while(!Q.empty())
+        {
+        int x = Q.front();
+        cout << x << endl;
+        Q.pop();
+        for(int i = 0; i < line.size(); i++)
+        {
+          if (is_connected(x,i) == true && (!nodeVisited[i]))
+          {
+            distance[i] = distance[x] + 1;
+            Q.push(i);
+            nodeVisited[i] = true;
+          }
+        }
+       }
+
+      path[0] = src;
+
+      for(int i = 1; i < line.size(); i++)
+      {
+        for(int j = 0; j < line.size(); j++)
+        {
+          if(distance[j] = i)
+            path[i] = j;
+        }
+      }
+
+      for(int i = 0; i < path.size(); i++)
+      {
+        cout << path[i] << endl;
+      }
 }
 
 Router Graph::getRouter(int router)
@@ -57,8 +104,9 @@ int Graph::distance(int src, int dest)
   bool nodeVisited [NODES] = {false};
   queue <int> Q;
   int current_node = src;
+
   cout << current_node << endl;
-  
+
     if(is_connected(src, dest) == true)  //check if they're neighbors
     {
       return 1;
