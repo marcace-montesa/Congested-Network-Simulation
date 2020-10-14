@@ -38,15 +38,25 @@ bool Graph::is_connected(int i, int j)
   }
 }
 
-void Graph::send_packet(Packet packet, int src, int dest)
+bool Graph::send_packet(Packet packet, int src, int dest)
 {
   //simultes packet traversal betwwen two routers
-  line[src].add_packet(packet);
-  line[dest].add_packet(packet);
+  bool src_packetadded = line[src].add_packet(packet);
+  if(src_packetadded == false) 
+  {  //is possible to get stuck on this loop if the space in the buffer is not free
+     return false;
+  }
+  bool dest_packetadded = line[dest].add_packet(packet);
+  if(dest_packetadded == false) 
+  {
+     return false;
+  }
+  
   line[src].remove_packet();
+  return true;
 }
 
-void Graph::packet_path(Packet packet, int src, int dest) 
+bool Graph::packet_path(Packet packet, int src, int dest) 
 {
   //  line[i].add_packet(packet); //send the packet from the router
     
@@ -85,13 +95,18 @@ void Graph::packet_path(Packet packet, int src, int dest)
             path[i] = j;
         }
       }
-
+    
       for (int j = 0; j < line.size(); j++)
       {
         int src = path[j];
         int dest = path[j+1];
-
+        int track = 0;
         send_packet(packet, src, dest);
+        while(send_packet(packet, src, dest) == false)
+        {
+           track++;
+        }
+        
       }
 
       /*for(int i = 0; i < (sizeof(path)/sizeof(path[0])); i++)
@@ -104,8 +119,6 @@ Router Graph::getRouter(int router)
 {
   return line[router];
 }
-
-
 
 int Graph::distance(int src, int dest)
 {  

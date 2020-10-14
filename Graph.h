@@ -18,8 +18,8 @@ class Graph
         Graph(int N);
         void add_edges(int i, int j);   
         bool is_connected(int i, int j); 
-        void packet_path(Packet packet, int src, int dest);
-        void send_packet(Packet packet, int src, int dest);
+        bool packet_path(Packet packet, int src, int dest);
+        bool send_packet(Packet packet, int src, int dest);
         //next step: create send_packet that traverses graph
         //also: send multiple packets
         Router getRouter(int router);

@@ -10,7 +10,7 @@ class Router
     //other public methods that are missing in UML will be in graph class
     public:
         //adds packet to buffer queue
-        void add_packet(Packet packet);
+        bool add_packet(Packet packet);
         void remove_packet();
         Router();
         Packet getPacket();

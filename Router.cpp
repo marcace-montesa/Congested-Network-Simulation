@@ -6,16 +6,22 @@ using namespace std;
 
 Router::Router() {};
 
-void Router::add_packet(Packet packet)
+bool Router::add_packet(Packet packet)
 {
-    queue.push(packet);
+    if(queue.size() <= 4) //check the size of the queue to see if we can add packets or not
+    {
+       queue.push(packet);
+       return true;
+    }
+    else {
+    	return false;
+    }
 }
 
 void Router::remove_packet()
 {
     queue.pop();
 }
-
 
 Packet Router::getPacket()
 {
