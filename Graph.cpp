@@ -1,5 +1,7 @@
 #include "Graph.h"
 #include <queue>
+#include <stdio.h>
+#include <vector>
 
 using namespace std;
 
@@ -40,6 +42,7 @@ bool Graph::is_connected(int i, int j)
 
 bool Graph::send_packet(Packet packet, int src, int dest)
 {
+  //cout << "Entered send_packet function" << endl;
   //simultes packet traversal betwwen two routers
   bool src_packetadded = line[src].add_packet(packet);
   if(src_packetadded == false) 
@@ -51,8 +54,8 @@ bool Graph::send_packet(Packet packet, int src, int dest)
   {
      return false;
   }
-  
   line[src].remove_packet();
+  //cout << "removing packet" << endl;
   return true;
 }
 
@@ -60,11 +63,13 @@ bool Graph::packet_path(Packet packet, int src, int dest)
 {
   //  line[i].add_packet(packet); //send the packet from the router
     
+    //cout << "Entered packet_path function" << endl;
+
     int distance [NODES] = {};
     bool nodeVisited [NODES] = {false};
     queue <int> Q;
     int current_node = src;
-    int path[] = {}; // might need to add nodes 
+    vector <int> path; 
       
         Q.push(src);
         nodeVisited[Q.front()] = true;
@@ -72,7 +77,7 @@ bool Graph::packet_path(Packet packet, int src, int dest)
         while(!Q.empty())
         {
         int x = Q.front();
-        cout << x << endl;
+        //cout << x << endl;
         Q.pop();
         for(int i = 0; i < line.size(); i++)
         {
@@ -85,34 +90,51 @@ bool Graph::packet_path(Packet packet, int src, int dest)
         }
        }
 
-      path[0] = src;
+      path.push_back(src);
 
       for(int i = 1; i < line.size(); i++)
       {
         for(int j = 0; j < line.size(); j++)
         {
-          if(distance[j] == i)
-            path[i] = j;
-        }
+          if((distance[j] == i) && (path.size() == i))
+          {
+            path.push_back(j);
+          }
+        } 
       }
-    
-      for (int j = 0; j < line.size(); j++)
+
+      /*for (int i = 0; i < path.size(); i++)
       {
-        int src = path[j];
-        int dest = path[j+1];
+        cout << path[i] << endl;
+      }
+      */
+      int path_len = path.size();
+
+      //cout << "path length is: " << path_len << endl;
+
+      for (int j = 0; j < (path_len-1); j++)
+      {
+        int new_src = path[j];
+        int new_dest = path[j+1];
         int track = 0;
-        send_packet(packet, src, dest);
-        while(send_packet(packet, src, dest) == false)
+        bool packet_sent = send_packet(packet, src, dest);
+        //cout << packet_sent << endl;
+        while((packet_sent == false) && track < 3)
         {
            track++;
+           packet_sent = send_packet(packet, src, dest);
+        }
+
+        if (track == 2)
+        {
+          cout << "Packet traversal failed between routers " << j << " and " << j+1 << 
+          " (packet was dropped 3 times)" << endl;
+          return false;
         }
         
       }
-
-      /*for(int i = 0; i < (sizeof(path)/sizeof(path[0])); i++)
-      {
-        cout << path[i] << endl;
-      }*/
+      //cout << "returning from packet_path" << endl;
+      return true;
 }
 
 Router Graph::getRouter(int router)
@@ -127,7 +149,7 @@ int Graph::distance(int src, int dest)
   queue <int> Q;
   int current_node = src;
 
-  cout << current_node << endl;
+  //cout << current_node << endl;
 
     if(is_connected(src, dest) == true)  //check if they're neighbors
     {

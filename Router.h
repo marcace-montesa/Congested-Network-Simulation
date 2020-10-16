@@ -13,7 +13,8 @@ class Router
         bool add_packet(Packet packet);
         void remove_packet();
         Router();
-        Packet getPacket();
+        Packet getPacket(); //gets packet at front of queue
+        int getPacketTotal(); //returns number of packets in queue
 
     private:
         queue<Packet> queue;
