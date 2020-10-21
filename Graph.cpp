@@ -9,17 +9,17 @@ Graph::Graph(int N)
 {
   router_num = N;
     for(int i = 0; i < N; i++) 
-   {
-      Router router;
-      line.push_back(router); //add Router to the graph
-   }
-   for(int i = 0; i < N; i++) 
-   {
-      for(int j = 0; j < N; j++) 
-      {
-        adjacency_matrix[i][j] = 0;
-      }
-   }
+    {
+        Router router;
+        line.push_back(router); //add Router to the graph
+    }
+    for(int i = 0; i < N; i++) 
+    {
+        for(int j = 0; j < N; j++) 
+        {
+          adjacency_matrix[i][j] = 0;
+        }
+    }
 }
 
 void Graph::add_edges(int i, int j) 
@@ -61,7 +61,7 @@ bool Graph::send_packet(Packet packet, int src, int dest)
 
 bool Graph::packet_path(Packet packet, int src, int dest) 
 {
-  //  line[i].add_packet(packet); //send the packet from the router
+    //line[i].add_packet(packet); //send the packet from the router
     
     //cout << "Entered packet_path function" << endl;
 
@@ -151,18 +151,18 @@ int Graph::distance(int src, int dest)
 
   //cout << current_node << endl;
 
-    if(is_connected(src, dest) == true)  //check if they're neighbors
-    {
-      return 1;
-    }
+  if(is_connected(src, dest) == true)  //check if they're neighbors
+  {
+    return 1;
+  }
    
-    else 
-    {
-      Q.push(src);
-      nodeVisited[Q.front()] = true;
+  else 
+  {
+    Q.push(src);
+    nodeVisited[Q.front()] = true;
 
-      while(!Q.empty())
-      {
+    while(!Q.empty())
+    {
       int x = Q.front();
       cout << x << endl;
       Q.pop();
@@ -175,7 +175,7 @@ int Graph::distance(int src, int dest)
           nodeVisited[i] = true;
         }
       }
-     }
+    }
 
     return distance[dest];
 
