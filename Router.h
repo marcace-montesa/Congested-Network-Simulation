@@ -17,7 +17,7 @@ class Router
         int getPacketTotal(); //returns number of packets in queue
 
     private:
-        queue<Packet> queue;
+        queue<Packet> packet_queue;
         bool queue_full;
         bool isActive;
 };

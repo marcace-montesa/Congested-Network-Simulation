@@ -9,30 +9,29 @@ Router::Router() {};
 bool Router::add_packet(Packet packet)
 {
     //cout << "Entered add_packet function" << endl;
-    if(queue.size() <= 4) //check the size of the queue to see if we can add packets or not
+    //cout << "buffer queue size " << packet_queue.size() << endl;
+    if(packet_queue.size() < 3) //check the size of the queue to see if we can add packets or not
     {
-       //cout << "entered if statement" << endl;
-       queue.push(packet);
+       packet_queue.push(packet);
+       //cout << "buffer queue size after packet added " << packet_queue.size() << endl;
        //cout << "pushed packet to queue" << endl;
        return true;
     }
-    else {
-    	return false;
-    }
+    return false;
 }
 
 int Router::getPacketTotal()
 {
-    return queue.size();
+    return packet_queue.size();
 }
 
 void Router::remove_packet()
 {
-    queue.pop();
+    packet_queue.pop();
 }
 
 Packet Router::getPacket()
 {
-    return queue.front();
+    return packet_queue.front();
 }
 

@@ -44,17 +44,19 @@ bool Graph::send_packet(Packet packet, int src, int dest)
 {
   //cout << "Entered send_packet function" << endl;
   //simultes packet traversal betwwen two routers
-  bool src_packetadded = line[src].add_packet(packet);
+  /*bool src_packetadded = line[src].add_packet(packet);
+  //cout << "src " << src_packetadded << endl;
   if(src_packetadded == false) 
   {  //is possible to get stuck on this loop if the space in the buffer is not free
      return false;
-  }
+  } */
   bool dest_packetadded = line[dest].add_packet(packet);
+  //cout << "dest " << dest_packetadded << endl;
   if(dest_packetadded == false) 
   {
      return false;
   }
-  line[src].remove_packet();
+  //line[src].remove_packet();
   //cout << "removing packet" << endl;
   return true;
 }
@@ -118,16 +120,16 @@ bool Graph::packet_path(Packet packet, int src, int dest)
         int new_dest = path[j+1];
         int track = 0;
         bool packet_sent = send_packet(packet, src, dest);
-        //cout << packet_sent << endl;
+        //cout <<"packet sent value " << packet_sent << endl;
         while((packet_sent == false) && track < 3)
         {
            track++;
            packet_sent = send_packet(packet, src, dest);
         }
 
-        if (track == 2)
+        if (track >= 2)
         {
-          cout << "Packet traversal failed between routers " << j << " and " << j+1 << 
+          cout << "Packet traversal failed between routers " << path[j] << " and " << path[j+1] << 
           " (packet was dropped 3 times)" << endl;
           return false;
         }
@@ -164,7 +166,7 @@ int Graph::distance(int src, int dest)
     while(!Q.empty())
     {
       int x = Q.front();
-      cout << x << endl;
+      //cout << x << endl;
       Q.pop();
       for(int i = 0; i < line.size(); i++)
       {

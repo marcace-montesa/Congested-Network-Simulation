@@ -56,9 +56,15 @@ int main()
   bool packet_sent6 = G.packet_path(packet, 2, 4);
   bool packet_sent7 = G.packet_path(packet, 2, 4);
   bool packet_sent8 = G.packet_path(packet, 2, 4);
-  cout << packet_sent6 << endl;
-  cout << packet_sent7 << endl;
-  cout << packet_sent8 << endl;
+  bool packet_sent9 = G.packet_path(packet, 2, 4);
+  cout << "packet1 " << packet_sent1 << endl;
+  cout << "packet6 " << packet_sent6 << endl;
+  cout << "packet7 " << packet_sent7 << endl;
+  cout << "packet8 " << packet_sent8 << endl;
+  for(int i = 0; i < G.getRouter(4).getPacketTotal(); i++) 
+  {
+  	cout << G.getRouter(4).getPacket().getHeader() << endl;
+  }
   //cout << G.getRouter(1).getPacket().getHeader() << endl;
   
 
