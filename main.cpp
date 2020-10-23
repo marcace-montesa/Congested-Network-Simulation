@@ -49,26 +49,32 @@ int main()
 
   Packet packet = Packet("header2");
   bool packet_sent1 = G.packet_path(packet, 2, 4);
-  bool packet_sent2 = G.packet_path(packet, 2, 4);
-  bool packet_sent3 = G.packet_path(packet, 2, 4);
-  bool packet_sent4 = G.packet_path(packet, 2, 4);
-  bool packet_sent5 = G.packet_path(packet, 2, 4);
-  bool packet_sent6 = G.packet_path(packet, 2, 4);
-  bool packet_sent7 = G.packet_path(packet, 2, 4);
-  bool packet_sent8 = G.packet_path(packet, 2, 4);
-  bool packet_sent9 = G.packet_path(packet, 2, 4);
+
+  for(int j = 0; j < G.get_router_num(); j++)
+  {
+    cout << j << endl;
+    G.getRouter(j).print_queue();
+  } 
+
+  bool packet_sent2 = G.packet_path(packet, 0, 3);
+  bool packet_sent3 = G.packet_path(packet, 0, 3);
+  bool packet_sent4 = G.packet_path(packet, 0, 3);
+  bool packet_sent5 = G.packet_path(packet, 0, 3);
+  bool packet_sent6 = G.packet_path(packet, 0, 3);
+  bool packet_sent7 = G.packet_path(packet, 0, 3);
+  bool packet_sent8 = G.packet_path(packet, 0, 3);
+  bool packet_sent9 = G.packet_path(packet, 0, 3);
   cout << "packet1 " << packet_sent1 << endl;
   cout << "packet6 " << packet_sent6 << endl;
   cout << "packet7 " << packet_sent7 << endl;
   cout << "packet8 " << packet_sent8 << endl;
-  for(int i = 0; i < G.getRouter(4).getPacketTotal(); i++) 
+  /*for(int i = 0; i < G.getRouter(4).getPacketTotal(); i++) 
   {
   	cout << G.getRouter(4).getPacket().getHeader() << endl;
-  }
+  } */
   //cout << G.getRouter(1).getPacket().getHeader() << endl;
-  
 
-  cout << G.getRouter(4).getPacketTotal() << endl;
+  cout << G.getRouter(3).getPacketTotal() << endl;
   
   return 0;
 }

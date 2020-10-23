@@ -44,19 +44,19 @@ bool Graph::send_packet(Packet packet, int src, int dest)
 {
   //cout << "Entered send_packet function" << endl;
   //simultes packet traversal betwwen two routers
-  /*bool src_packetadded = line[src].add_packet(packet);
+  bool src_packetadded = line[src].add_packet(packet);
   //cout << "src " << src_packetadded << endl;
   if(src_packetadded == false) 
   {  //is possible to get stuck on this loop if the space in the buffer is not free
      return false;
-  } */
+  }
   bool dest_packetadded = line[dest].add_packet(packet);
   //cout << "dest " << dest_packetadded << endl;
   if(dest_packetadded == false) 
   {
      return false;
   }
-  //line[src].remove_packet();
+  line[src].remove_packet();
   //cout << "removing packet" << endl;
   return true;
 }
@@ -112,15 +112,16 @@ bool Graph::packet_path(Packet packet, int src, int dest)
       */
       int path_len = path.size();
 
-      //cout << "path length is: " << path_len << endl;
+      cout << "path length is: " << path_len << endl;
 
-      for (int j = 0; j < (path_len-1); j++)
+      for (int j = 0; j < 1; j++) // it works, we don't know why it works, we don't want to know why it works
       {
         int new_src = path[j];
         int new_dest = path[j+1];
         int track = 0;
         bool packet_sent = send_packet(packet, src, dest);
-        //cout <<"packet sent value " << packet_sent << endl;
+        cout << "packet sent value " << packet_sent << endl;
+        cout << "current dest: " << new_dest << endl;
         while((packet_sent == false) && track < 3)
         {
            track++;
@@ -132,8 +133,8 @@ bool Graph::packet_path(Packet packet, int src, int dest)
           cout << "Packet traversal failed between routers " << path[j] << " and " << path[j+1] << 
           " (packet was dropped 3 times)" << endl;
           return false;
-        }
-        
+        } 
+
       }
       //cout << "returning from packet_path" << endl;
       return true;
@@ -182,4 +183,9 @@ int Graph::distance(int src, int dest)
     return distance[dest];
 
    }
+}
+
+int Graph::get_router_num()
+{
+    return this -> router_num;
 }

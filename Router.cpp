@@ -10,7 +10,7 @@ bool Router::add_packet(Packet packet)
 {
     //cout << "Entered add_packet function" << endl;
     //cout << "buffer queue size " << packet_queue.size() << endl;
-    if(packet_queue.size() < 3) //check the size of the queue to see if we can add packets or not
+    if(packet_queue.size() < 5) //check the size of the queue to see if we can add packets or not
     {
        packet_queue.push(packet);
        //cout << "buffer queue size after packet added " << packet_queue.size() << endl;
@@ -34,4 +34,12 @@ Packet Router::getPacket()
 {
     return packet_queue.front();
 }
-
+void Router::print_queue()
+{
+    while(!packet_queue.empty())
+    {
+      cout << packet_queue.front().getHeader() << " ";
+      packet_queue.pop();
+    }
+    cout << "*" << endl;
+} 

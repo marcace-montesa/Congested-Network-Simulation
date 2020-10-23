@@ -15,6 +15,7 @@ class Router
         Router();
         Packet getPacket(); //gets packet at front of queue
         int getPacketTotal(); //returns number of packets in queue
+        void print_queue();
 
     private:
         queue<Packet> packet_queue;

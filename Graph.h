@@ -24,6 +24,7 @@ class Graph
         //also: send multiple packets
         Router getRouter(int router);
         int distance(int i, int j);
+        int get_router_num();
         
     private:
         int router_num;
