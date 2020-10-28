@@ -20,6 +20,8 @@ void print_graph(vector<int> a, int b)
 
 } */
 
+
+//set "flag toggle" to compare networks before and after network congestion
 int main() 
 {
   int node_number = 5;
@@ -33,23 +35,20 @@ int main()
   srand(time(NULL));
   int src;
   int dest;
-  int packets = 5;
+  int static packets = 5;
 
   cout << " random number of packets sent: " << packets << endl;
 
   Packet packet = Packet("header");
   
-  for (int i = 0; i < packets; i++)
+  for (int i = 0; i < 3; i++)
   {
     src = rand() % 5;
     dest = rand() % 5;
     cout << "random src: " << src << " random dest: " << dest << endl;
-    bool packet_sent = G.packet_path(packet, src, dest);
+    bool packet_sent = G.packet_path(packet, src, dest, packets);
     cout << G.getRouter(dest).getPacketTotal() << endl;
   }
-
-  cout << "after for loop" << endl;
-  cout << G.getRouter(dest).getPacketTotal() << endl;
   
   return 0;
 }

@@ -10,13 +10,20 @@ bool Router::add_packet(Packet packet)
 {
     //cout << "Entered add_packet function" << endl;
     //cout << "buffer queue size " << packet_queue.size() << endl;
-    if(packet_queue.size() < 5) //check the size of the queue to see if we can add packets or not
+    if(packet_queue.size() < 7) //check the size of the queue to see if we can add packets or not
     {
        packet_queue.push(packet);
        //cout << "buffer queue size after packet added " << packet_queue.size() << endl;
        //cout << "pushed packet to queue" << endl;
        return true;
     }
+
+    else if(packet_queue.size() >= 7 && packet_queue.size() < 10)
+    {
+        //set flag
+    }
+
+    //flag to signify queue is full, clear buffer queue
     return false;
 }
 
