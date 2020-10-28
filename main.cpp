@@ -4,6 +4,9 @@
 #include <iostream>
 #include <time.h>
 #include <vector>
+#include <stdlib.h>
+#include <stdio.h>
+
 using namespace std;
 
 //track packet loss between routers
@@ -26,55 +29,27 @@ int main()
   G.add_edges(1,3);
   G.add_edges(2,3);
   G.add_edges(4,1);
-  //int distance = G.distance(3, 4); 
-  //cout << "distance is " << distance << endl;
 
-  /*Packet packet = Packet("header");
-  bool packet_sent = G.packet_path(packet, 2, 4);
-  cout << packet_sent << endl;
-  cout << G.getRouter(4).getPacket().getHeader() << endl;
-  bool packet_sent1 = G.packet_path(packet, 0, 3);
-  cout << packet_sent1 << endl;
-  cout << G.getRouter(3).getPacket().getHeader() << endl;
-  bool packet_sent4 = G.packet_path(packet, 3, 0);
-  cout << packet_sent4 << endl;
-  cout << G.getRouter(0).getPacket().getHeader() << endl;
-  bool packet_sent3 = G.packet_path(packet, 4, 2);
-  cout << packet_sent3 << endl;
-  cout << G.getRouter(2).getPacket().getHeader() << endl;
+  srand(time(NULL));
+  int src;
+  int dest;
+  int packets = 5;
 
-  bool packet_sent5 = G.packet_path(packet, 0, 1);
-  cout << packet_sent5 << endl;
-  cout << G.getRouter(1).getPacket().getHeader() << endl;*/
+  cout << " random number of packets sent: " << packets << endl;
 
-  Packet packet = Packet("header2");
-  bool packet_sent1 = G.packet_path(packet, 2, 4);
-
-  for(int j = 0; j < G.get_router_num(); j++)
+  Packet packet = Packet("header");
+  
+  for (int i = 0; i < packets; i++)
   {
-    cout << j << endl;
-    G.getRouter(j).print_queue();
-  } 
+    src = rand() % 5;
+    dest = rand() % 5;
+    cout << "random src: " << src << " random dest: " << dest << endl;
+    bool packet_sent = G.packet_path(packet, src, dest);
+    cout << G.getRouter(dest).getPacketTotal() << endl;
+  }
 
-  bool packet_sent2 = G.packet_path(packet, 0, 3);
-  bool packet_sent3 = G.packet_path(packet, 0, 3);
-  bool packet_sent4 = G.packet_path(packet, 0, 3);
-  bool packet_sent5 = G.packet_path(packet, 0, 3);
-  bool packet_sent6 = G.packet_path(packet, 0, 3);
-  bool packet_sent7 = G.packet_path(packet, 0, 3);
-  bool packet_sent8 = G.packet_path(packet, 0, 3);
-  bool packet_sent9 = G.packet_path(packet, 0, 3);
-  cout << "packet1 " << packet_sent1 << endl;
-  cout << "packet6 " << packet_sent6 << endl;
-  cout << "packet7 " << packet_sent7 << endl;
-  cout << "packet8 " << packet_sent8 << endl;
-  /*for(int i = 0; i < G.getRouter(4).getPacketTotal(); i++) 
-  {
-  	cout << G.getRouter(4).getPacket().getHeader() << endl;
-  } */
-  //cout << G.getRouter(1).getPacket().getHeader() << endl;
-
-  cout << G.getRouter(3).getPacketTotal() << endl;
+  cout << "after for loop" << endl;
+  cout << G.getRouter(dest).getPacketTotal() << endl;
   
   return 0;
 }

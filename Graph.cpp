@@ -65,14 +65,25 @@ bool Graph::packet_path(Packet packet, int src, int dest)
 {
     //line[i].add_packet(packet); //send the packet from the router
     
-    //cout << "Entered packet_path function" << endl;
-
+    //cout << "Entered packet_path function" << endl
     int distance [NODES] = {};
     bool nodeVisited [NODES] = {false};
     queue <int> Q;
     int current_node = src;
     vector <int> path; 
-      
+
+    if(src == dest)
+    {
+      cout << "no path to traverse" << endl;
+      return 1;
+    }
+
+    else if(is_connected(src, dest) == true)  //check if they're neighbors
+    {
+      distance[dest] = 1; 
+    }
+
+    else {  
         Q.push(src);
         nodeVisited[Q.front()] = true;
 
@@ -91,35 +102,49 @@ bool Graph::packet_path(Packet packet, int src, int dest)
           }
         }
        }
+      }
+      
+      cout << "distance array:";
+
+      for (int i = 0; i < NODES; i++)
+      {
+        cout << " " << distance[i] << " ";
+      }
+
+      cout << endl;
 
       path.push_back(src);
 
-      for(int i = 1; i < line.size(); i++)
+      cout << "line size is " << line.size() << endl;
+
+      for(int i = 1; i < line.size(); i++) //iterating through distances
       {
-        for(int j = 0; j < line.size(); j++)
+        for(int j = 0; j < line.size(); j++) //iterating through routers
         {
-          if((distance[j] == i) && (path.size() == i))
+          if((distance[j] == i) && (path.size() == i) && distance[dest] != i)
           {
             path.push_back(j);
           }
         } 
       }
 
-      /*for (int i = 0; i < path.size(); i++)
+      path.push_back(dest);
+
+      for (int i = 0; i < path.size(); i++)
       {
         cout << path[i] << endl;
       }
-      */
+      
       int path_len = path.size();
 
       cout << "path length is: " << path_len << endl;
 
-      for (int j = 0; j < 1; j++) // it works, we don't know why it works, we don't want to know why it works
+      for (int j = 0; j < (path_len - 1); j++) // it works, we don't know why it works, we don't want to know why it works
       {
         int new_src = path[j];
         int new_dest = path[j+1];
         int track = 0;
-        bool packet_sent = send_packet(packet, src, dest);
+        bool packet_sent = send_packet(packet, new_src, new_dest);
         cout << "packet sent value " << packet_sent << endl;
         cout << "current dest: " << new_dest << endl;
         while((packet_sent == false) && track < 3)
