@@ -224,3 +224,9 @@ int Graph::get_router_num()
 {
     return this -> router_num;
 }
+
+void Graph::Update(bool buffer_flag) 
+{
+    this -> buffer_flag = buffer_flag;
+}
+

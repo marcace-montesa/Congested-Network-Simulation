@@ -1,7 +1,7 @@
 #include "Router.h"
 #include "Packet.h"
 #include <iostream>
-
+#include <list>
 using namespace std;
 
 Router::Router() {};
@@ -50,3 +50,33 @@ void Router::print_queue()
     }
     cout << "*" << endl;
 } 
+
+void Router::register_observer(Observer *o) 
+{
+   Observer_list.push_back(o);
+}
+
+void Router::remove_observer(Observer *o) 
+{
+   Observer_list.remove(o);
+}
+
+void Router::notify_observer(bool buffer_flag)
+{
+   list<Observer *>::iterator iterator = Observer_list.begin();
+   while (iterator != Observer_list.end())
+   {
+      (*iterator)->Update(get_flag());
+      iterator++;
+   }
+}
+
+void Router::set_flag(bool buffer_flag) 
+{
+   this -> buffer_flag = buffer_flag;
+}
+
+bool Router::get_flag()
+{
+   return this -> buffer_flag;
+}

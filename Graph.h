@@ -1,5 +1,6 @@
 #include "Router.h"
 #include "Packet.h"
+#include "Observer.h"
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
@@ -11,7 +12,7 @@
 
 //basic functionality complete
 //not complete: packet traversal of graph, sending multiple packets, faulty router problem
-class Graph
+class Graph: public Observer 
 {
     public:
         //graph constructor, will receive number of routers in graph.
@@ -25,11 +26,15 @@ class Graph
         Router getRouter(int router);
         int distance(int i, int j);
         int get_router_num();
+        void Update(bool buffer_flag) override;
         
     private:
         int router_num;
         vector<Router> line;
         int adjacency_matrix[NODES][NODES];
+        bool buffer_flag;
 };
+
+
 
 #endif 
