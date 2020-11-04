@@ -11,7 +11,7 @@ class Subject
     
      virtual void register_observer(Observer *o) = 0;
      virtual void remove_observer(Observer *o) = 0;
-     virtual void notify_observer(bool buffer_flag);
+     virtual void notify_observer(bool buffer_flag) = 0;
 };
 
 #endif

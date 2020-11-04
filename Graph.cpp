@@ -229,4 +229,3 @@ void Graph::Update(bool buffer_flag)
 {
     this -> buffer_flag = buffer_flag;
 }
-
