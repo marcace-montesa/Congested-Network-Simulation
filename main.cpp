@@ -32,10 +32,24 @@ int main()
   G.add_edges(2,3);
   G.add_edges(4,1);
 
+  cout << "router 0 flag is " << G.getRouter(0).get_flag() << endl;
+
   srand(time(NULL));
   int src;
   int dest;
-  int static packets = 5;
+  int packets = 50;
+
+  G.getRouter(0).register_observer(&G);
+  G.getRouter(1).register_observer(&G);
+  G.getRouter(2).register_observer(&G);
+  G.getRouter(3).register_observer(&G);
+  G.getRouter(4).register_observer(&G);
+
+  G.getRouter(0).remove_observer(&G);
+  G.getRouter(1).remove_observer(&G);
+  G.getRouter(2).remove_observer(&G);
+  G.getRouter(3).remove_observer(&G);
+  G.getRouter(4).remove_observer(&G);
 
   cout << " random number of packets sent: " << packets << endl;
 
@@ -48,7 +62,7 @@ int main()
     cout << "random src: " << src << " random dest: " << dest << endl;
     bool packet_sent = G.packet_path(packet, src, dest, packets);
     cout << G.getRouter(dest).getPacketTotal() << endl;
-  }
+  } 
   
   return 0;
 }

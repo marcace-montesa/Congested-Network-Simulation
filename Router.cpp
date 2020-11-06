@@ -20,7 +20,25 @@ bool Router::add_packet(Packet packet)
 
     else if(packet_queue.size() >= 7 && packet_queue.size() < 10)
     {
-        //set flag
+        set_flag(1);
+        cout << "router flag value after set flag: " << get_flag() << endl;
+        notify_observer();
+        packet_queue.push(packet);
+        return true;
+    }
+
+    else if(packet_queue.size() >= 10)
+    {
+       //clears half of the buffer queue
+       for (int i = 0; i < 5; i++)
+       {
+          //removing the newest packets
+          packet_queue.pop();
+       }
+       cout << "Buffer queue full, clearing queue" << endl;
+       set_flag(0);
+       notify_observer();
+       return false;
     }
 
     //flag to signify queue is full, clear buffer queue
@@ -61,7 +79,7 @@ void Router::remove_observer(Observer *o)
    Observer_list.remove(o);
 }
 
-void Router::notify_observer(bool buffer_flag)
+void Router::notify_observer()
 {
    list<Observer *>::iterator iterator = Observer_list.begin();
    while (iterator != Observer_list.end())

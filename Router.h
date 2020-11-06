@@ -20,7 +20,7 @@ class Router: public Subject
         void print_queue();
         void register_observer(Observer *o) override;
         void remove_observer(Observer *o) override;
-        void notify_observer(bool buffer_flag) override;
+        void notify_observer() override;
         void set_flag(bool buffer_flag);
         bool get_flag();
 

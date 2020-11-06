@@ -12,6 +12,7 @@ Graph::Graph(int N)
     {
         Router router;
         line.push_back(router); //add Router to the graph
+        line[i].set_flag(0); //sets the buffer flags
     }
     for(int i = 0; i < N; i++) 
     {
@@ -66,9 +67,7 @@ bool Graph::send_packet(Packet packet, int src, int dest)
 }
 
 bool Graph::packet_path(Packet packet, int src, int dest, int packets) 
-{
-    //line[i].add_packet(packet); //send the packet from the router
-    
+{   
     //cout << "Entered packet_path function" << endl
     int distance [NODES] = {};
     bool nodeVisited [NODES] = {false};
@@ -108,18 +107,18 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
        }
       }
       
-      cout << "distance array:";
+      //cout << "distance array:";
 
-      for (int i = 0; i < NODES; i++)
+      /*for (int i = 0; i < NODES; i++)
       {
         cout << " " << distance[i] << " ";
-      }
+      }*/
 
-      cout << endl;
+      //cout << endl;
 
       path.push_back(src);
 
-      cout << "line size is " << line.size() << endl;
+      //cout << "line size is " << line.size() << endl;
 
       for(int i = 1; i < line.size(); i++) //iterating through distances
       {
@@ -134,24 +133,39 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 
       path.push_back(dest);
 
-      for (int i = 0; i < path.size(); i++)
+      /*for (int i = 0; i < path.size(); i++)
       {
         cout << path[i] << endl;
-      }
+      }*/
       
       int path_len = path.size();
 
-      cout << "path length is: " << path_len << endl;
+      //cout << "path length is: " << path_len << endl;
 
       for (int j = 0; j < (path_len - 1); j++)
       {
         int new_src = path[j];
         int new_dest = path[j+1];
         int track = 0;
+        bool packets_reduced = 0;
 
-        //put this in while that checks flag value
+        if ((line[new_dest].get_flag() == 1) && (packets_reduced == 0)) 
+          {
+            packets = packets/2;
+            packets_reduced = 1;
+            cout << "reduced packets send by half" << endl;
+          }
+        
         for (int i = 0; i < packets; i++)
-        {
+        {   
+          cout << "current flag value: " << line[new_dest].get_flag() << endl;
+          if ((line[new_dest].get_flag() == 1) && (packets_reduced == 0)) 
+          {
+            packets = packets/2;
+            packets_reduced = 1;
+            cout << "reduced packets send by half" << endl;
+          }
+          
           bool packet_sent = send_packet(packet, new_src, new_dest);
           cout << "packet sent value " << packet_sent << endl;
           cout << "current dest: " << new_dest << endl;
@@ -166,7 +180,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
             cout << "Packet traversal failed between routers " << path[j] << " and " << path[j+1] << 
             " (packet was dropped 3 times)" << endl;
             return false;
-          } 
+          }
         }
 
         //if flag value gets modified, cut packets in half
