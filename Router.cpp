@@ -22,13 +22,24 @@ bool Router::add_packet(Packet packet)
     {
         set_flag(1);
         cout << "router flag value after set flag: " << get_flag() << endl;
-        notify_observer();
         packet_queue.push(packet);
         return true;
     }
-
-    else if(packet_queue.size() >= 10)
+    
+    else if(packet_queue.size() >= 10 && (packet.getDestination() == this->ID)) 
     {
+      cout << "At least ten packets received from " << packet.getSource() << endl;
+      for(int i = 0; i < packet_queue.size(); i++)
+      {
+        packet_queue.pop();
+      }
+      set_flag(0);
+      return false;
+    }
+    
+    else if(packet_queue.size() >= 10)
+    {  
+      
        //clears half of the buffer queue
        for (int i = 0; i < 5; i++)
        {
@@ -37,7 +48,6 @@ bool Router::add_packet(Packet packet)
        }
        cout << "Buffer queue full, clearing queue" << endl;
        set_flag(0);
-       notify_observer();
        return false;
     }
 
@@ -69,26 +79,6 @@ void Router::print_queue()
     cout << "*" << endl;
 } 
 
-void Router::register_observer(Observer *o) 
-{
-   Observer_list.push_back(o);
-}
-
-void Router::remove_observer(Observer *o) 
-{
-   Observer_list.remove(o);
-}
-
-void Router::notify_observer()
-{
-   list<Observer *>::iterator iterator = Observer_list.begin();
-   while (iterator != Observer_list.end())
-   {
-      (*iterator)->Update(get_flag());
-      iterator++;
-   }
-}
-
 void Router::set_flag(bool buffer_flag) 
 {
    this -> buffer_flag = buffer_flag;
@@ -97,4 +87,14 @@ void Router::set_flag(bool buffer_flag)
 bool Router::get_flag()
 {
    return this -> buffer_flag;
+}
+
+int Router::getID() 
+{
+  return ID;
+}
+
+void Router::setID(int ID) 
+{
+   this->ID = ID;
 }

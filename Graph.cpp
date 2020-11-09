@@ -13,6 +13,7 @@ Graph::Graph(int N)
         Router router;
         line.push_back(router); //add Router to the graph
         line[i].set_flag(0); //sets the buffer flags
+        line[i].setID(i);
     }
     for(int i = 0; i < N; i++) 
     {
@@ -74,7 +75,9 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
     queue <int> Q;
     int current_node = src;
     vector <int> path; 
-
+    int total_packet = packets;
+    int packet_interval = packets;
+    
     if(src == dest)
     {
       cout << "no path to traverse" << endl;
@@ -155,7 +158,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
             packets_reduced = 1;
             cout << "reduced packets send by half" << endl;
           }
-        
+        //while loop
         for (int i = 0; i < packets; i++)
         {   
           cout << "current flag value: " << line[new_dest].get_flag() << endl;
@@ -167,6 +170,10 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
           }
           
           bool packet_sent = send_packet(packet, new_src, new_dest);
+          if(packet_sent == true)
+          {
+            total_packet--;
+          }
           cout << "packet sent value " << packet_sent << endl;
           cout << "current dest: " << new_dest << endl;
           while((packet_sent == false) && track < 3)
@@ -183,7 +190,6 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
           }
         }
 
-        //if flag value gets modified, cut packets in half
       }
       //cout << "returning from packet_path" << endl;
       return true;
@@ -239,7 +245,3 @@ int Graph::get_router_num()
     return this -> router_num;
 }
 
-void Graph::Update(bool buffer_flag) 
-{
-    this -> buffer_flag = buffer_flag;
-}

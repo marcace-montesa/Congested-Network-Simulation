@@ -19,11 +19,17 @@ class Packet
         //packet constructor
         Packet(string header);
         Packet();
-
+        void setDestination(int dest);
+        int getDestination();
+        void setSource(int src);
+        int getSource();
+        
     private:
 
         //Header
         string Header;
+        int destination;
+        int source;
 
 };
 

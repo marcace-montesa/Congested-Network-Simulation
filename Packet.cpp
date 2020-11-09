@@ -18,3 +18,23 @@ string Packet::getHeader()
 {
     return this -> Header;
 }
+
+void Packet::setDestination(int dest) 
+{
+  this->destination = dest;
+}
+
+int Packet::getDestination() 
+{
+   return destination;
+}
+
+void Packet::setSource(int src) 
+{
+   this->source = src;
+}
+        
+int Packet::getSource() 
+{
+  return source;
+}

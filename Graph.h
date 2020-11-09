@@ -1,6 +1,5 @@
 #include "Router.h"
 #include "Packet.h"
-#include "Observer.h"
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
@@ -11,8 +10,8 @@
 #define Graph_H
 
 //basic functionality complete
-//not complete: packet traversal of graph, sending multiple packets, faulty router problem
-class Graph: public Observer 
+
+class Graph
 {
     public:
         //graph constructor, will receive number of routers in graph.
@@ -21,12 +20,9 @@ class Graph: public Observer
         bool is_connected(int i, int j); 
         bool packet_path(Packet packet, int src, int dest, int packets);
         bool send_packet(Packet packet, int src, int dest);
-        //next step: create send_packet that traverses graph
-        //also: send multiple packets
         Router getRouter(int router);
         int distance(int i, int j);
         int get_router_num();
-        void Update(bool buffer_flag) override;
         
     private:
         int router_num;
