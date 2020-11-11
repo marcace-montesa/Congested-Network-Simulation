@@ -26,7 +26,7 @@ bool Router::add_packet(Packet packet)
         return true;
     }
     
-    else if(packet_queue.size() >= 10 && (packet.getDestination() == this->ID)) 
+    else if(packet_queue.size() >= 10 && (packet.getDestination() == this -> ID)) 
     {
       cout << "At least ten packets received from " << packet.getSource() << endl;
       for(int i = 0; i < packet_queue.size(); i++)
@@ -96,5 +96,5 @@ int Router::getID()
 
 void Router::setID(int ID) 
 {
-   this->ID = ID;
+   this -> ID = ID;
 }
