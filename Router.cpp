@@ -29,11 +29,15 @@ bool Router::add_packet(Packet packet)
     else if(packet_queue.size() >= 10 && (packet.getDestination() == this -> ID)) 
     {
       cout << "At least ten packets received from " << packet.getSource() << endl;
-      for(int i = 0; i < packet_queue.size(); i++)
+      int packets = packet_queue.size();
+      for(int i = 0; i < packets; i++)
       {
+        // cout << "Packets in destination router before pop " << packet_queue.size() << endl;
         packet_queue.pop();
+        // cout << "Packets in destination router after pop " << packet_queue.size() << endl;
       }
       set_flag(0);
+      cout << "Packets in destination router (should be 0) " << packet_queue.size() << endl;
       return false;
     }
     

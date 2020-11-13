@@ -156,7 +156,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	        if ((line[new_dest].get_flag() == 1) && (packets_reduced == 0)) 
 	          {
 	            packet_interval = packet_interval/2;
-	            packets_reduced = 1;
+	            //packets_reduced = 1;
 	            cout << "reduced packets send by half" << endl;
 	            if(new_dest != dest)
 	            {
@@ -170,10 +170,11 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	            	for(int k = 0; k < line[new_dest].getPacketTotal(); k++)
 	            	{
 	            		total_packet--;
+                  cout << "Packets left " << total_packet << endl;
 	            	}
 	            }
 	          }
-	        //while loop
+
 	        LOOP:for (int i = 0; i < packet_interval; i++)
 	        {   
 
@@ -196,6 +197,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	            	for(int k = 0; k < line[new_dest].getPacketTotal(); k++)
 	            	{
 	            		total_packet--;
+                  cout << "Packets left " << total_packet << endl;
 	            	}
 	            }
 	          }
@@ -204,6 +206,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	          if((packet_sent == true) && (new_dest == dest))
 	          {
 	            total_packet--;
+              cout << "Packets left " << total_packet << endl;
 	          }
 
 	          cout << "packet sent value " << packet_sent << endl;
@@ -218,6 +221,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	          if((packet_sent == true) && (new_dest == dest))
 	          {
 	            total_packet--;
+              cout << "Packets left " << total_packet << endl;
 	          }
 
 	          if (track >= 2)
