@@ -21,6 +21,8 @@ class Router
         bool get_flag();
         int getID();
         void setID(int ID);
+        bool getPacketsReduced();
+        void setPacketsReduced(bool packets_reduced);
         
     private:
         queue<Packet> packet_queue;
@@ -28,6 +30,7 @@ class Router
         bool isActive;
         bool buffer_flag;
         int ID;
+        bool packets_reduced;
 };
 
 #endif

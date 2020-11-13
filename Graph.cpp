@@ -14,6 +14,7 @@ Graph::Graph(int N)
         line.push_back(router); //add Router to the graph
         line[i].set_flag(0); //sets the buffer flags
         line[i].setID(i);
+        line[i].setPacketsReduced(0);
     }
     for(int i = 0; i < N; i++) 
     {
@@ -142,7 +143,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
       }*/
       
       int path_len = path.size();
-
+      
       //cout << "path length is: " << path_len << endl;
       while(total_packet > 0)
       {
@@ -151,8 +152,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	        int new_src = path[j];
 	        int new_dest = path[j+1];
 	        int track = 0;
-	        bool packets_reduced = 0;
-
+          bool packets_reduced = line[new_dest].getPacketsReduced();
 	        if ((line[new_dest].get_flag() == 1) && (packets_reduced == 0)) 
 	          {
 	            packet_interval = packet_interval/2;
@@ -163,7 +163,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	            	j++;
 	            	new_src = path[j];
 	            	new_dest = path[j+1];
-	            	goto LOOP;
+	            	//goto LOOP; //problematic
 	            }
 	            else
 	            {
@@ -175,22 +175,20 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	            }
 	          }
 
-	        LOOP:for (int i = 0; i < packet_interval; i++)
+	        for (int i = 0; i < packet_interval; i++)
 	        {   
-
 	          cout << "current flag value: " << line[new_dest].get_flag() << endl;
-
 	          if ((line[new_dest].get_flag() == 1) && (packets_reduced == 0)) 
 	          {
 	            packet_interval = packet_interval/2;
-	            packets_reduced = 1;
+	            //packets_reduced = 1;
 	            cout << "reduced packets send by half" << endl;
 	            if(new_dest != dest)
 	            {
 	            	j++;
 	            	new_src = path[j];
 	            	new_dest = path[j+1];
-	            	goto LOOP;
+	            	//goto LOOP; //problematic
 	            }
 	            else
 	            {
@@ -203,6 +201,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	          }
 	          
 	          bool packet_sent = send_packet(packet, new_src, new_dest);
+            packets_reduced = line[new_dest].getPacketsReduced();
 	          if((packet_sent == true) && (new_dest == dest))
 	          {
 	            total_packet--;
@@ -216,6 +215,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	          {
 	            track++;
 	            packet_sent = send_packet(packet, src, dest);
+              packets_reduced = line[new_dest].getPacketsReduced();
 	          }
 
 	          if((packet_sent == true) && (new_dest == dest))

@@ -37,6 +37,7 @@ bool Router::add_packet(Packet packet)
         // cout << "Packets in destination router after pop " << packet_queue.size() << endl;
       }
       set_flag(0);
+      setPacketsReduced(0);
       cout << "Packets in destination router (should be 0) " << packet_queue.size() << endl;
       return false;
     }
@@ -101,4 +102,14 @@ int Router::getID()
 void Router::setID(int ID) 
 {
    this -> ID = ID;
+}
+
+bool Router::getPacketsReduced()
+{
+  return this -> packets_reduced;
+}
+
+void Router::setPacketsReduced(bool packets_reduced)
+{
+  this -> packets_reduced = packets_reduced;
 }
