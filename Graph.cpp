@@ -145,7 +145,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
       int path_len = path.size();
       
       //cout << "path length is: " << path_len << endl;
-      while(total_packet > 0)
+      /* while(total_packet > 0)
       {
 	      for (int j = 0; j < (path_len - 1); j++)
 	      {
@@ -235,7 +235,90 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 
 	      }
       //cout << "returning from packet_path" << endl;
- 	 }
+ 	 } */
+
+     while(total_packet > 0)
+     {
+     	//cout << "first while statement" << endl;
+
+     	for(int i = 0; i < (path_len - 1); i++)
+     	{
+     		int new_src = path[i];
+     		int new_dest = path[i+1];
+     		int track = 0;
+     		bool break_out = 0;
+
+     		while(line[new_dest].get_flag() != 1)
+     		{
+     			cout << "second while statement" << endl;
+     			if(new_dest == dest)
+     			{
+     				break_out = 1;
+     				bool packet_sent = send_packet(packet, new_src, new_dest);
+     				if(packet_sent == true)
+			        {
+			           total_packet--;
+		            	cout << "Packets left " << total_packet << endl;
+			        }
+
+			        while((packet_sent == false) && track < 3)
+			        {
+			           track++;
+			           packet_sent = send_packet(packet, src, dest);
+			        }
+
+			        if(packet_sent == true)
+	          		{
+	            		total_packet--;
+              			cout << "Packets left " << total_packet << endl;
+	          		}
+
+	          		if (track >= 2)
+	          		{
+	            		cout << "Packet traversal failed between routers " << path[i] << " and " << path[i+1] << " (packet was dropped 3 times)" << endl;
+	            		return false;
+	          		}
+     			}
+     			else
+     			{
+     				cout << "else statement" << endl;
+					bool packet_sent = send_packet(packet, new_src, new_dest);
+     				if(packet_sent == true)
+			        {
+		            	cout << "Packets left " << total_packet << endl;
+			        }
+
+			        while((packet_sent == false) && track < 3)
+			        {
+			           track++;
+			           packet_sent = send_packet(packet, src, dest);
+			        }
+
+			        if(packet_sent == true)
+	          		{
+              			cout << "Packets left " << total_packet << endl;
+	          		}
+
+	          		if (track >= 2)
+	          		{
+	            		cout << "Packet traversal failed between routers " << path[i] << " and " << path[i+1] << " (packet was dropped 3 times)" << endl;
+	            		return false;
+	          		}
+     			}
+     		}
+
+	     	if(break_out == 1)
+	     	{
+	     		line[new_dest].depop();
+	     		break;
+	     	}
+
+	     	line[new_dest].depop();
+	     	continue;
+     	}
+     }
+
+
  	 return true;
 }
 

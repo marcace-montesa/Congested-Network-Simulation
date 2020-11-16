@@ -23,6 +23,7 @@ class Router
         void setID(int ID);
         bool getPacketsReduced();
         void setPacketsReduced(bool packets_reduced);
+        void depop();
         
     private:
         queue<Packet> packet_queue;

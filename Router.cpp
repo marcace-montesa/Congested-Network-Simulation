@@ -113,3 +113,12 @@ void Router::setPacketsReduced(bool packets_reduced)
 {
   this -> packets_reduced = packets_reduced;
 }
+
+void Router::depop()
+{
+  int packets = getPacketTotal();
+  for(int i = 0; i < packets; i++)
+      {
+        packet_queue.pop();
+      }
+}
