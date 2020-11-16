@@ -167,6 +167,7 @@ bool Graph::packet_path(Packet packet, int src, int dest, int packets)
 	            }
 	            else
 	            {
+                //unnecessary for loop
 	            	for(int k = 0; k < line[new_dest].getPacketTotal(); k++)
 	            	{
 	            		total_packet--;
