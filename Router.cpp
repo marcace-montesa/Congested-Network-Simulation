@@ -121,4 +121,6 @@ void Router::depop()
       {
         packet_queue.pop();
       }
+      
+  set_flag(0);
 }
