@@ -244,48 +244,7 @@ Router Graph::getRouter(int router)
   return line[router];
 }
 
-int Graph::distance(int src, int dest)
-{  
-  int distance [NODES] = {};
-  bool nodeVisited [NODES] = {false};
-  queue <int> Q;
-  int current_node = src;
-
-  //cout << current_node << endl;
-
-  if(is_connected(src, dest) == true)  //check if they're neighbors
-  {
-    return 1;
-  }
-   
-  else 
-  {
-    Q.push(src);
-    nodeVisited[Q.front()] = true;
-
-    while(!Q.empty())
-    {
-      int x = Q.front();
-      //cout << x << endl;
-      Q.pop();
-      for(int i = 0; i < line.size(); i++)
-      {
-        if (is_connected(x, i) == true && (!nodeVisited[i]))
-        {
-          distance[i] = distance[x] + 1;
-          Q.push(i);
-          nodeVisited[i] = true;
-        }
-      }
-    }
-
-    return distance[dest];
-
-   }
-}
-
 int Graph::get_router_num()
 {
     return this -> router_num;
 }
-

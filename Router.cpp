@@ -118,9 +118,9 @@ void Router::depop()
 {
   int packets = getPacketTotal();
   for(int i = 0; i < packets; i++)
-      {
-        packet_queue.pop();
-      }
+  {
+     packet_queue.pop();
+  }
       
   set_flag(0);
 }

@@ -21,7 +21,6 @@ class Graph
         bool packet_path(Packet packet, int src, int dest, int packets);
         bool send_packet(Packet packet, int src, int dest);
         Router getRouter(int router);
-        int distance(int i, int j);
         int get_router_num();
         
     private:

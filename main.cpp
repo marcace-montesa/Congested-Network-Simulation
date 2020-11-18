@@ -9,18 +9,6 @@
 
 using namespace std;
 
-//track packet loss between routers
-/*void packet_loss(bool packet) 
-{
-
-}
-
-void print_graph(vector<int> a, int b) 
-{
-
-} */
-
-
 int main() 
 {
   int node_number = 5;
