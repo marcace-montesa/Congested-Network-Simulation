@@ -1,7 +1,6 @@
 #include "Packet.h"
 #include <string>
 
-//implementations
 Packet::Packet(string header)
 {
     this -> setHeader(header);

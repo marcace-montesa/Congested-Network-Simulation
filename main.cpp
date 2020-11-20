@@ -19,14 +19,12 @@ int main()
   G.add_edges(2,3);
   G.add_edges(4,1);
 
-  cout << "router 0 flag is " << G.getRouter(0).get_flag() << endl;
-
   srand(time(NULL));
   int src;
   int dest;
   int packets = 50;
   
-  cout << "random number of packets sent: " << packets << endl;
+  cout << "number of packets sent: " << packets << endl;
 
   Packet packet = Packet("header");
   

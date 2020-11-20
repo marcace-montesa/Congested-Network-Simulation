@@ -8,30 +8,23 @@ using namespace std;
 
 class Router
 {
-    //other public methods that are missing in UML will be in graph class
     public:
-        //adds packet to buffer queue
-        bool add_packet(Packet packet);
-        void remove_packet();
-        Router();
+        bool add_packet(Packet packet); //adds packet to buffer queue
+        void remove_packet(); //removes packet from buffer queue
+        Router(); 
         Packet getPacket(); //gets packet at front of queue
         int getPacketTotal(); //returns number of packets in queue
-        void print_queue();
+        void print_queue(); //shows whats in the queue (for debugging)
         void set_flag(bool buffer_flag);
-        bool get_flag();
-        int getID();
-        void setID(int ID);
-        bool getPacketsReduced();
-        void setPacketsReduced(bool packets_reduced);
-        void depop();
+        bool get_flag(); //returns the flag
+        int getID(); //returns each routers unique id
+        void setID(int ID); //sets each routers id
+        void depop(); //depopulates the buffer queue, resets flag
         
     private:
-        queue<Packet> packet_queue;
-        bool queue_full;
-        bool isActive;
-        bool buffer_flag;
+        queue<Packet> packet_queue; 
+        bool buffer_flag; //flag that signals if the router is getting full
         int ID;
-        bool packets_reduced;
 };
 
 #endif

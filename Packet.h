@@ -9,28 +9,19 @@ using namespace std;
 class Packet
 {
     public:
-
-        //returns the header of the packet
-        string getHeader();
-
-        //sets packet header
-        void setHeader(string header);
-
-        //packet constructor
+        string getHeader(); //returns the header of the packet
+        void setHeader(string header); //sets packet header
         Packet(string header);
         Packet();
-        void setDestination(int dest);
-        int getDestination();
-        void setSource(int src);
-        int getSource();
+        void setDestination(int dest); //sets the final destination
+        int getDestination(); //returns the final destination
+        void setSource(int src); //sets the initial source
+        int getSource(); //returns the initial source
         
     private:
-
-        //Header
-        string Header;
+        string Header; 
         int destination;
         int source;
-
 };
 
 #endif
